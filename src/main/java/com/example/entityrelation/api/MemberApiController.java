@@ -22,55 +22,23 @@ public class MemberApiController {
     private final MemberRepsitory memberRepsitory;
     private final OrderRepsitory orderRepsitory;
 
-    //가짜 엔티티 member 불러 오기
+
+    //가짜 엔티티 Member 불러 오기
     @GetMapping("/api/members")
-    public List<MemberDto> members(){
-        Member member = new Member();
-        member.setName("testA");
-        memberRepsitory.save(member);
+    public List<Member> orders(){
+        init();
+        return memberRepsitory.findAll();
+    }
 
-        Member member2 = new Member();
-        member2.setName("testB");
-        memberRepsitory.save(member2);
-
-        //------------------------------------------
-
-        Order order = new Order();
-        order.setMember(member);
-        order.setOrderDate(LocalDateTime.now());
-        orderRepsitory.save(order);
-
-        Order order2 = new Order();
-        order2.setMember(member);
-        order2.setOrderDate(LocalDateTime.now());
-        orderRepsitory.save(order2);
-
-        Order order3 = new Order();
-        order3.setMember(member2);
-        order3.setOrderDate(LocalDateTime.now());
-        orderRepsitory.save(order3);
-
-
-
+    //DTO를 이용한 가짜 엔티티 member 불러오기
+    @GetMapping("/api/membersCollection")
+    public List<MemberDto> membersCollection(){
+        init();
         List<Member> members = memberRepsitory.findAll();
         List<MemberDto> result = members.stream().map(MemberDto::new)
                 .collect(toList());
 
         return result;
-    }
-
-    //주인 엔티티 Order 불러 오기
-    @GetMapping("/api/orders")
-    public List<Order> orders(){
-        Member member = new Member();
-        member.setName("testA");
-        memberRepsitory.save(member);
-
-        Order order = new Order();
-        order.setMember(member);
-        orderRepsitory.save(order);
-
-        return orderRepsitory.findAll();
     }
 
     @Data
@@ -100,6 +68,36 @@ public class MemberApiController {
             orderDate = order.getOrderDate();
 
         }
+    }
+
+
+    private void init() {
+
+        //------------------------------------------
+        Member member = new Member();
+        member.setName("testA");
+        memberRepsitory.save(member);
+
+        Member member2 = new Member();
+        member2.setName("testB");
+        memberRepsitory.save(member2);
+
+        //------------------------------------------
+
+        Order order = new Order();
+        order.setMember(member);
+        order.setOrderDate(LocalDateTime.now());
+        orderRepsitory.save(order);
+
+        Order order2 = new Order();
+        order2.setMember(member);
+        order2.setOrderDate(LocalDateTime.now());
+        orderRepsitory.save(order2);
+
+        Order order3 = new Order();
+        order3.setMember(member2);
+        order3.setOrderDate(LocalDateTime.now());
+        Order save = orderRepsitory.save(order3);
     }
 
 
