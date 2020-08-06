@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,5 +20,6 @@ public class Order {
     @JoinColumn(name ="member_id")
     private Member member;
 
+    private LocalDateTime orderDate;
 
 }
