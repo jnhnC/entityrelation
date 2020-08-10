@@ -1,9 +1,9 @@
 package com.example.entityrelation;
 
-import com.example.entityrelation.domain.Address;
-import com.example.entityrelation.domain.Delivery;
-import com.example.entityrelation.domain.Member;
-import com.example.entityrelation.domain.Order;
+import com.example.entityrelation.domain.*;
+import com.example.entityrelation.domain.item.Album;
+import com.example.entityrelation.domain.item.Book;
+import com.example.entityrelation.domain.item.Movie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,11 +38,11 @@ public class InitDB {
 
 
             Delivery delivery = new Delivery();
-            delivery.setStatus("배송중");
+            delivery.setStatus(DeliveryStatus.READY);
             em.persist(delivery);
 
             Delivery delivery2 = new Delivery();
-            delivery2.setStatus("배송완료");
+            delivery2.setStatus(DeliveryStatus.COMP);
             em.persist(delivery2);
 
 
@@ -58,9 +58,29 @@ public class InitDB {
             order2.setOrderDate(LocalDateTime.now());
             em.persist(order2);
 
+            Book book1 = new Book();
+            book1.setName("BookA");
+            book1.setPrice(10000);
+            book1.setStockQuantity(100);
+            book1.setAuthor("BookAAuthor");
+            book1.setIsbn("BookA10001");
+            em.persist(book1);
 
+            Album album1 = new Album();
+            album1.setName("AlbumA");
+            album1.setPrice(150000);
+            album1.setStockQuantity(50);
+            album1.setArtist("AlbumAArtist");
+            album1.setEtc("AlbumAEtc");
+            em.persist(album1);
 
-
+            Movie movie1 = new Movie();
+            movie1.setName("MovieA");
+            movie1.setPrice(200000);
+            movie1.setPrice(25);
+            movie1.setActor("MovieAActor");
+            movie1.setDirector("MovieADirector");
+            em.persist(movie1);
 
         }
 
@@ -71,7 +91,7 @@ public class InitDB {
             em.persist(member2);
 
             Delivery delivery = new Delivery();
-            delivery.setStatus("배송중");
+            delivery.setStatus(DeliveryStatus.READY);
             em.persist(delivery);
 
             Order order3 = new Order();

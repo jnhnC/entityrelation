@@ -1,5 +1,6 @@
 package com.example.entityrelation.api;
 
+import com.example.entityrelation.domain.DeliveryStatus;
 import com.example.entityrelation.domain.Member;
 import com.example.entityrelation.domain.Order;
 import com.example.entityrelation.repository.MemberRepsitory;
@@ -54,10 +55,12 @@ public class OrderApiController {
     static class OrderDto{
         private Long orderId;
         private String name;
+        private DeliveryStatus status;
 
         public OrderDto(Order order){
             orderId = order.getId();
             name = order.getMember().getName();
+            status = order.getDelivery().getStatus();
 
         }
 

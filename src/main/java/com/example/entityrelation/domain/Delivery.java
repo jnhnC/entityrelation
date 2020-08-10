@@ -16,7 +16,14 @@ public class Delivery {
     @Column(name="delivery_id")
     private Long id;
 
-    private String status;
+    //Enum을 이용한 상태값 지정
+   // private String status;
+    @Enumerated
+    private DeliveryStatus status;
+
+    //일대일 양방향 매핑 관계 설정
+    @OneToOne(mappedBy = "delivery")
+    private Order order;
 
 
 }

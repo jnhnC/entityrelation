@@ -1,9 +1,6 @@
 package com.example.entityrelation.api;
 
-import com.example.entityrelation.domain.Address;
-import com.example.entityrelation.domain.Delivery;
-import com.example.entityrelation.domain.Member;
-import com.example.entityrelation.domain.Order;
+import com.example.entityrelation.domain.*;
 import com.example.entityrelation.repository.MemberRepsitory;
 import com.example.entityrelation.repository.OrderRepsitory;
 import lombok.Data;
@@ -68,7 +65,7 @@ public class MemberApiController {
     static class OrderDto {
         private Long orderId;
         private LocalDateTime orderDate;
-        private String status;
+        private DeliveryStatus status;
 
         public OrderDto(Order order) {
             orderId = order.getId();
