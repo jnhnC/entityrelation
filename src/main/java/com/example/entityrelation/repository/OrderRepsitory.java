@@ -9,11 +9,13 @@ import java.util.List;
 
 public interface OrderRepsitory extends JpaRepository<Order,Long> {
 
-    @Query("select o from Order o join fetch o.member m join fetch o.delivery d")
-    List<Order> findFetchAll();
 
     @Query("select o from Order o join fetch o.member m")
     List<Order> findFetchOrderMember();
+
+    @Query("select o from Order o join fetch o.member m join fetch o.delivery d")
+    List<Order> findFetchAll();
+
 
 
 }

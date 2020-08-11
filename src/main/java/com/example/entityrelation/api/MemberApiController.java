@@ -66,16 +66,26 @@ public class MemberApiController {
         private Long orderId;
         private LocalDateTime orderDate;
         private DeliveryStatus status;
+        private List<OrderItemDto> orderItems;
 
         public OrderDto(Order order) {
             orderId = order.getId();
             orderDate = order.getOrderDate();
             status = order.getDelivery().getStatus();
+            orderItems = order.getOrderItems().stream()
+                    .map(OrderItemDto::new)
+                    .collect(toList());
+        }
+
+        @Data
+        private class OrderItemDto {
+            private String itemName;
+
+            public OrderItemDto(OrderItem orderItem){
+                itemName = orderItem.getItem().getName();
+            }
+
         }
     }
-
-
-
-
 
 }

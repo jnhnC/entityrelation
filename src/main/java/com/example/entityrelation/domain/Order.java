@@ -1,15 +1,19 @@
 package com.example.entityrelation.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table(name="orders")
+@NoArgsConstructor
 public class Order {
 
     @Id    @GeneratedValue
@@ -27,6 +31,10 @@ public class Order {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="delivery_id")
     private Delivery delivery;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
 
 }
 

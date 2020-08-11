@@ -3,6 +3,8 @@ package com.example.entityrelation.api;
 import com.example.entityrelation.domain.DeliveryStatus;
 import com.example.entityrelation.domain.Member;
 import com.example.entityrelation.domain.Order;
+import com.example.entityrelation.domain.OrderItem;
+import com.example.entityrelation.domain.item.Item;
 import com.example.entityrelation.repository.MemberRepsitory;
 import com.example.entityrelation.repository.OrderRepsitory;
 import lombok.Data;
@@ -11,8 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +40,7 @@ public class OrderApiController {
 
         List<OrderDto> orderDtos = orders.stream()
                 .map(OrderDto::new)
-                .collect(Collectors.toList());
+                .collect(toList());
         return orderDtos;
     }
 
@@ -46,7 +51,7 @@ public class OrderApiController {
 
         List<OrderDto> orderDtos = orders.stream()
                 .map(OrderDto::new)
-                .collect(Collectors.toList());
+                .collect(toList());
         return orderDtos;
     }
 
@@ -56,14 +61,32 @@ public class OrderApiController {
         private Long orderId;
         private String name;
         private DeliveryStatus status;
+        private List<OrderItemDto> orderItems ;
 
         public OrderDto(Order order){
             orderId = order.getId();
             name = order.getMember().getName();
             status = order.getDelivery().getStatus();
+            orderItems =  order.getOrderItems().stream()
+                    .map(OrderItemDto::new)
+                    .collect(toList());
 
         }
 
+        @Data
+        private class OrderItemDto {
+
+            private Long id;
+            private int orderPrice;
+            private String itemName ;
+
+            public OrderItemDto(OrderItem orderItem){
+                id = orderItem.getId();
+                orderPrice = orderItem.getOrderPrice();
+                itemName = orderItem.getItem().getName();
+            }
+
+        }
     }
 
 }
