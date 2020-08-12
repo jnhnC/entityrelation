@@ -17,11 +17,10 @@ public class Category {
     @Id
     @GeneratedValue
     private Long id;
-
     private String name;
 
-    @OneToMany(mappedBy = "categories")
-    private List<CategoryItem> categoryItems = new ArrayList<>();
+   /* @OneToMany(mappedBy = "categories")
+    private List<CategoryItem> categoryItems = new ArrayList<>();*/
 
 
 

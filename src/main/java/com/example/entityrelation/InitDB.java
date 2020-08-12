@@ -87,13 +87,38 @@ public class InitDB {
             orderItem.setOrder(order);
             orderItem.setOrderPrice(book1.getPrice());
             orderItem.setItem(book1);
+            orderItem.setCount(1);
             em.persist(orderItem);
 
             OrderItem orderItem2 = new OrderItem();
             orderItem2.setOrder(order);
             orderItem2.setOrderPrice(movie1.getPrice());
             orderItem2.setItem(movie1);
+            orderItem2.setCount(1);
             em.persist(orderItem2);
+
+            Category category = new Category();
+            category.setName("CategoryA");
+            em.persist(category);
+
+            Category category2 = new Category();
+            category2.setName("CategoryB");
+            em.persist(category2);
+
+            CategoryItem categoryItem = new CategoryItem();
+            categoryItem.setCategories(category);
+            categoryItem.setItems(book1);
+            em.persist(categoryItem);
+
+            CategoryItem categoryItem2 = new CategoryItem();
+            categoryItem2.setCategories(category);
+            categoryItem2.setItems(album1);
+            em.persist(categoryItem2);
+
+            CategoryItem categoryItem3 = new CategoryItem();
+            categoryItem3.setCategories(category2);
+            categoryItem3.setItems(movie1);
+            em.persist(categoryItem3);
         }
 
 
@@ -142,9 +167,32 @@ public class InitDB {
             orderItem3.setOrder(order3);
             orderItem3.setOrderPrice(movie2.getPrice());
             orderItem3.setItem(movie2);
+            orderItem3.setCount(1);
             em.persist(orderItem3);
 
+            Category category3 = new Category();
+            category3.setName("CategoryC");
+            em.persist(category3);
 
+            CategoryItem categoryItem4 = new CategoryItem();
+            categoryItem4.setCategories(category3);
+            categoryItem4.setItems(book2);
+            em.persist(categoryItem4);
+
+            CategoryItem categoryItem5 = new CategoryItem();
+            categoryItem5.setCategories(category3);
+            categoryItem5.setItems(album2);
+            em.persist(categoryItem5);
+
+            CategoryItem categoryItem6 = new CategoryItem();
+            categoryItem6.setCategories(category3);
+            categoryItem6.setItems(movie2);
+            em.persist(categoryItem6);
+
+            CategoryItem categoryItem7 = new CategoryItem();
+            categoryItem7.setCategories(category3);
+            categoryItem7.setItems(album2);
+            em.persist(categoryItem7);
 
         }
 
