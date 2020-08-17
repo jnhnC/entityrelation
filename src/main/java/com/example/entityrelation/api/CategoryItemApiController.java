@@ -32,9 +32,9 @@ public class CategoryItemApiController {
 
         public CategoryItemDto(CategoryItem categoryItem){
             id = categoryItem.getId();
-            dtype = categoryItem.getItems().getDtype();
-            categoryName = categoryItem.getCategories().getName();
-            itemName = categoryItem.getItems().getName();
+            dtype = categoryItem.getItem().getDtype();
+            categoryName = categoryItem.getCategory().getName();
+            itemName = categoryItem.getItem().getName();
         }
     }
 }

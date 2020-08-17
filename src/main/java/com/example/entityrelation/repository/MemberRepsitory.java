@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface MemberRepsitory extends JpaRepository<Member,Long> {
 
-
 }

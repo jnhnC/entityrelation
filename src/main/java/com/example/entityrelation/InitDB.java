@@ -106,18 +106,18 @@ public class InitDB {
             em.persist(category2);
 
             CategoryItem categoryItem = new CategoryItem();
-            categoryItem.setCategories(category);
-            categoryItem.setItems(book1);
+            categoryItem.setCategory(category);
+            categoryItem.setItem(book1);
             em.persist(categoryItem);
 
             CategoryItem categoryItem2 = new CategoryItem();
-            categoryItem2.setCategories(category);
-            categoryItem2.setItems(album1);
+            categoryItem2.setCategory(category);
+            categoryItem2.setItem(album1);
             em.persist(categoryItem2);
 
             CategoryItem categoryItem3 = new CategoryItem();
-            categoryItem3.setCategories(category2);
-            categoryItem3.setItems(movie1);
+            categoryItem3.setCategory(category2);
+            categoryItem3.setItem(movie1);
             em.persist(categoryItem3);
         }
 
@@ -175,23 +175,23 @@ public class InitDB {
             em.persist(category3);
 
             CategoryItem categoryItem4 = new CategoryItem();
-            categoryItem4.setCategories(category3);
-            categoryItem4.setItems(book2);
+            categoryItem4.setCategory(category3);
+            categoryItem4.setItem(book2);
             em.persist(categoryItem4);
 
             CategoryItem categoryItem5 = new CategoryItem();
-            categoryItem5.setCategories(category3);
-            categoryItem5.setItems(album2);
+            categoryItem5.setCategory(category3);
+            categoryItem5.setItem(album2);
             em.persist(categoryItem5);
 
             CategoryItem categoryItem6 = new CategoryItem();
-            categoryItem6.setCategories(category3);
-            categoryItem6.setItems(movie2);
+            categoryItem6.setCategory(category3);
+            categoryItem6.setItem(movie2);
             em.persist(categoryItem6);
 
             CategoryItem categoryItem7 = new CategoryItem();
-            categoryItem7.setCategories(category3);
-            categoryItem7.setItems(album2);
+            categoryItem7.setCategory(category3);
+            categoryItem7.setItem(album2);
             em.persist(categoryItem7);
 
         }

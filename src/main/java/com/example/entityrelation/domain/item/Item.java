@@ -2,6 +2,7 @@ package com.example.entityrelation.domain.item;
 
 import com.example.entityrelation.domain.Category;
 import com.example.entityrelation.domain.CategoryItem;
+import com.example.entityrelation.domain.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,8 +27,12 @@ public abstract class Item {
     @Column(insertable = false, updatable = false)
     private String dtype;
 
+    @OneToMany(mappedBy = "item")
+    private List<OrderItem> orderItems = new ArrayList<>();
 
-  /*  @OneToMany(mappedBy = "items")
-    private List<CategoryItem> categoryItems = new ArrayList<>();*/
+    @OneToMany(mappedBy = "item")
+    private List<CategoryItem> categoryItems = new ArrayList<>();
+
+
 
 }

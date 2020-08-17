@@ -36,16 +36,6 @@ public class MemberApiController {
         return result;
     }
 
-    //default_batch_fetch_size옵션을 이용한 컬렉션 최적화
-    @GetMapping("/api/membersCollectionFetch")
-    public List<MemberDto> membersCollectionFetch(){
-        List<Member> members = memberRepsitory.findAll();
-        List<MemberDto> result = members.stream().map(MemberDto::new)
-                .collect(toList());
-
-        return result;
-    }
-
     @Data
     static class MemberDto {
         private String name;
@@ -77,15 +67,15 @@ public class MemberApiController {
                     .collect(toList());
         }
 
-        @Data
-        private class OrderItemDto {
-            private String itemName;
-
-            public OrderItemDto(OrderItem orderItem){
-                itemName = orderItem.getItem().getName();
-            }
+    }
+    @Data
+    static class OrderItemDto {
+        private String itemName;
+        public OrderItemDto(OrderItem orderItem){
+            itemName = orderItem.getItem().getName();
 
         }
+
     }
 
 }

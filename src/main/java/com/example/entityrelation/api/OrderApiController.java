@@ -36,7 +36,7 @@ public class OrderApiController {
     //DTO 사용하기
     @GetMapping("/api/ordersDto")
     public List<OrderDto> ordersDto(){
-        List<Order> orders =orderRepsitory.findAll();
+        List<Order> orders =orderRepsitory.findFetchOrderMember();
 
         List<OrderDto> orderDtos = orders.stream()
                 .map(OrderDto::new)
@@ -60,12 +60,15 @@ public class OrderApiController {
     static class OrderDto{
         private Long orderId;
         private String name;
+        private String address;
         private DeliveryStatus status;
         private List<OrderItemDto> orderItems ;
 
         public OrderDto(Order order){
             orderId = order.getId();
             name = order.getMember().getName();
+            address = order.getMember().getAddress().getCity()
+                    +""+ order.getMember().getAddress().getStreet();
             status = order.getDelivery().getStatus();
             orderItems =  order.getOrderItems().stream()
                     .map(OrderItemDto::new)
@@ -74,7 +77,7 @@ public class OrderApiController {
         }
 
         @Data
-        private class OrderItemDto {
+        static class OrderItemDto {
 
             private Long id;
             private int orderPrice;
