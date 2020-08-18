@@ -1,6 +1,5 @@
 package com.example.entityrelation.domain.item;
 
-import com.example.entityrelation.domain.Category;
 import com.example.entityrelation.domain.CategoryItem;
 import com.example.entityrelation.domain.OrderItem;
 import lombok.Getter;
@@ -32,7 +31,5 @@ public abstract class Item {
 
     @OneToMany(mappedBy = "item")
     private List<CategoryItem> categoryItems = new ArrayList<>();
-
-
 
 }

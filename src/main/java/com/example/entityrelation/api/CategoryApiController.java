@@ -38,10 +38,11 @@ public class CategoryApiController {
 
         @Data
         private class CategoryItemDto {
-            private Item item;
+            private String itemName;
 
             public CategoryItemDto(CategoryItem categoryItem){
-                item = categoryItem.getItem();
+                itemName = categoryItem.getItem().getName();
+
             }
         }
     }
