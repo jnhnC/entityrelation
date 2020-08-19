@@ -32,9 +32,11 @@ public class InitDB {
 
         public void dbInit1() {
 
-            Member member = new Member();
-            member.setName("testA");
-            member.setAddress(new Address("서울", "남부순환로1430", "860-1"));
+//            Member member = new Member();
+//            member.setName("testA");
+//            member.setAddress(new Address("서울", "남부순환로1430", "860-1"));
+
+            Member member = new Member("testA","서울","남부순환로1430","860-1");
             em.persist(member);
 
 
@@ -124,9 +126,11 @@ public class InitDB {
 
         public void dbInit2() {
 
-            Member member2 = new Member();
-            member2.setName("testB");
-            member2.setAddress(new Address("아산", "순천향로1913", "331-9"));
+//            Member member2 = new Member();
+//            member2.setName("testB");
+//            member2.setAddress(new Address("아산", "순천향로1913", "331-9"));
+            Member member2 = new Member("testB","아산", "순천향로1913", "331-9");
+
             em.persist(member2);
 
             Delivery delivery = new Delivery();

@@ -11,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Member {
 
@@ -30,5 +29,8 @@ public class Member {
     private List<Order> orders = new ArrayList<>();
 
 
-
+    public Member(String name, String city, String streets, String zipcode) {
+        this.name = name;
+        this.address = new Address(city,streets,zipcode);
+    }
 }
