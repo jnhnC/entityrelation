@@ -1,5 +1,6 @@
 package com.example.entityrelation.domain;
 
+import com.example.entityrelation.domain.item.Book;
 import com.example.entityrelation.domain.item.Item;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -12,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class OrderItem {
 
@@ -33,4 +33,10 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    public OrderItem(Order order, int orderPrice, Item item, int count) {
+        this.order = order;
+        this.orderPrice = orderPrice;
+        this.item = item;
+        this.count =  count;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.entityrelation.domain;
 
 
+import com.example.entityrelation.domain.item.Book;
 import com.example.entityrelation.domain.item.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,8 @@ public class CategoryItem {
     private Item item;
 
 
-
+    public CategoryItem(Category category, Item item) {
+        this.category = category;
+        this.item = item;
+    }
 }

@@ -35,5 +35,12 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
+
+
+    public Order(Member member, Delivery delivery, LocalDateTime orderDate) {
+        this.member = member;
+        this.delivery = delivery;
+        this.orderDate = orderDate;
+    }
 }
 

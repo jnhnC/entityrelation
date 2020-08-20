@@ -12,16 +12,16 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
-@Getter @Setter
+@Getter
 public abstract class Item {
 
     @Id @GeneratedValue
     @Column(name = "item_id")
     private Long id;
 
-    private String name;
-    private int price;
-    private int stockQuantity;
+    protected String name;
+    protected int price;
+    protected int stockQuantity;
 
     @Column(insertable = false, updatable = false)
     private String dtype;

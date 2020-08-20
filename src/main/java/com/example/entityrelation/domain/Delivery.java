@@ -28,4 +28,7 @@ public class Delivery {
     private Order order;
 
 
+    public Delivery(DeliveryStatus status) {
+        this.status = status;
+    }
 }
