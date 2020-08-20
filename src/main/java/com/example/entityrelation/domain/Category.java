@@ -24,9 +24,7 @@ public class Category {
     private List<CategoryItem> categoryItems = new ArrayList<>();
 
 
-
-
-
-
-
+    public Category(String name) {
+        this.name = name;
+    }
 }

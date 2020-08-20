@@ -18,7 +18,6 @@ import static java.util.stream.Collectors.toList;
 public class MemberApiController {
 
     private final MemberRepsitory memberRepsitory;
-    private final OrderRepsitory orderRepsitory;
 
     //가짜 엔티티 Member 불러 오기
     @GetMapping("/api/members")
