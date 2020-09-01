@@ -22,6 +22,5 @@ public class Album extends Item {
         this.stockQuantity = stockQuantity;
         this.artist = artist;
         this.etc = etc;
-
     }
 }

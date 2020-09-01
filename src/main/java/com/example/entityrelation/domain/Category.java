@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Category {
+public class Category extends BaseEntity{
 
     @Id
     @GeneratedValue

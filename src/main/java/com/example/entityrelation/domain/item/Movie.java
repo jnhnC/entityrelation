@@ -22,7 +22,5 @@ public class Movie extends Item {
         this.stockQuantity = stockQuantity;
         this.director = director;
         this.actor = actor;
-
-
     }
 }

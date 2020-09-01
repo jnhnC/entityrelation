@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Delivery {
+public class Delivery extends BaseEntity{
 
     @Id
     @GeneratedValue

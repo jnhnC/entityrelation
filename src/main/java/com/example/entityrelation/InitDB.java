@@ -39,6 +39,9 @@ public class InitDB {
             Member member = new Member("testA","서울","남부순환로1430","860-1");
             em.persist(member);
 
+            Member member2 = new Member("testA","서울","남부순환로1231","861-1");
+            em.persist(member2);
+
 
 //            Delivery delivery = new Delivery();
 //            delivery.setStatus(DeliveryStatus.READY);

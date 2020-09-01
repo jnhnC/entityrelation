@@ -61,6 +61,18 @@ public class OrderApiController {
         return orderDtos;
     }
 
+    //페치조인 사용하기
+//    @GetMapping("/api/ordersFetchPaging")
+//    public Page<OrderDto> ordersFetchPaging(){
+//
+//        PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "member_id"));
+//
+//        Page<Order> orders = orderRepsitory.findFetchPaging(pageRequest);
+//        Page<OrderDto> orderDtos = orders.map(o -> new OrderDto(o));
+//
+//        return orderDtos;
+//    }
+
     //페이징 변경
     @GetMapping("/api/ordersPage")
     public Page<OrderDto> ordersPage(){

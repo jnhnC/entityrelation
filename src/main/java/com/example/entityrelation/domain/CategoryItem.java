@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CategoryItem {
+public class CategoryItem extends BaseEntity{
 
     @Id
     @GeneratedValue
