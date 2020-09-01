@@ -6,10 +6,15 @@ import com.example.entityrelation.domain.Order;
 import com.example.entityrelation.domain.OrderItem;
 import com.example.entityrelation.domain.item.Item;
 import com.example.entityrelation.repository.MemberRepsitory;
+import com.example.entityrelation.repository.OrderQueryRepository;
 import com.example.entityrelation.repository.OrderRepsitory;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -24,6 +29,7 @@ import static java.util.stream.Collectors.toList;
 public class OrderApiController {
     private final MemberRepsitory memberRepsitory;
     private final OrderRepsitory orderRepsitory;
+    private final OrderQueryRepository orderQueryRepository;
 
 
     //주인 엔티티 Order 불러 오기
@@ -55,6 +61,31 @@ public class OrderApiController {
         return orderDtos;
     }
 
+    //페이징 변경
+    @GetMapping("/api/ordersPage")
+    public Page<OrderDto> ordersPage(){
+
+        PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "member_id"));
+        Page<Order> orders = orderRepsitory.findAll(pageRequest);
+        Page<OrderDto> orderDtos = orders.map(m -> new OrderDto(m));
+
+
+        return orderDtos;
+    }
+
+    //다중페치조인 페이징
+    @GetMapping("/api/ordersFetchPaging")
+    public List<OrderDto> ordersFetchPaging(
+            @RequestParam(value = "offset", defaultValue = "0") int offset,
+            @RequestParam(value = "limit", defaultValue = "100") int limit ){
+
+        List<Order> orders =orderQueryRepository.findFetchPaging(offset, limit);
+
+        List<OrderDto> orderDtos = orders.stream()
+                .map(OrderDto::new)
+                .collect(toList());
+        return orderDtos;
+    }
 
     @Data
     static class OrderDto{
