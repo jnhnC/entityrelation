@@ -31,15 +31,17 @@ public class InitDB {
         private final EntityManager em;
 
         public void dbInit1() {
+            Team team = new Team("teamA");
+            em.persist(team);
 
 //            Member member = new Member();
 //            member.setName("testA");
 //            member.setAddress(new Address("서울", "남부순환로1430", "860-1"));
 
-            Member member = new Member("testA","서울","남부순환로1430","860-1");
+            Member member = new Member("testA",20,"서울","남부순환로1430","860-1", team);
             em.persist(member);
 
-            Member member2 = new Member("testA","서울","남부순환로1231","861-1");
+            Member member2 = new Member("testD",28,"서울","남부순환로1231","861-1", team);
             em.persist(member2);
 
 
@@ -171,10 +173,12 @@ public class InitDB {
 
         public void dbInit2() {
 
+            Team team = new Team("teamB");
+            em.persist(team);
 //            Member member2 = new Member();
 //            member2.setName("testB");
 //            member2.setAddress(new Address("아산", "순천향로1913", "331-9"));
-            Member member2 = new Member("testB","아산", "순천향로1913", "331-9");
+            Member member2 = new Member("testB",35,"아산", "순천향로1913", "331-9", team);
             em.persist(member2);
 
 //            Delivery delivery = new Delivery();
