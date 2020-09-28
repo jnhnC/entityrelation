@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface MemberRepsitory extends JpaRepository<Member,Long> {
+public interface MemberRepository extends JpaRepository<Member,Long>, MemberRepositoryCustom {
 
     //  Page<Member> findAll(PageRequest pageRequest);
 }

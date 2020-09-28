@@ -1,8 +1,7 @@
 package com.example.entityrelation.api;
 
 import com.example.entityrelation.domain.*;
-import com.example.entityrelation.repository.MemberRepsitory;
-import com.example.entityrelation.repository.OrderRepsitory;
+import com.example.entityrelation.repository.MemberRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -18,7 +17,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class MemberApiController {
 
-    private final MemberRepsitory memberRepsitory;
+    private final MemberRepository memberRepsitory;
 
     //가짜 엔티티 Member 불러 오기
     @GetMapping("/api/members")

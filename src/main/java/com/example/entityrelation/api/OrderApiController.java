@@ -1,11 +1,9 @@
 package com.example.entityrelation.api;
 
 import com.example.entityrelation.domain.DeliveryStatus;
-import com.example.entityrelation.domain.Member;
 import com.example.entityrelation.domain.Order;
 import com.example.entityrelation.domain.OrderItem;
-import com.example.entityrelation.domain.item.Item;
-import com.example.entityrelation.repository.MemberRepsitory;
+import com.example.entityrelation.repository.MemberRepository;
 import com.example.entityrelation.repository.OrderQueryRepository;
 import com.example.entityrelation.repository.OrderRepsitory;
 import lombok.Data;
@@ -17,17 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor
 public class OrderApiController {
-    private final MemberRepsitory memberRepsitory;
+    private final MemberRepository memberRepsitory;
     private final OrderRepsitory orderRepsitory;
     private final OrderQueryRepository orderQueryRepository;
 

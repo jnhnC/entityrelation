@@ -14,7 +14,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -25,6 +24,10 @@ class MemberJpaRepositoryTest {
 
     @Autowired
     MemberJpaRepository memberJpaRepository;
+
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     public void basicTest(){
@@ -53,7 +56,7 @@ class MemberJpaRepositoryTest {
         membersearchCondition.setAgeLoe(40);
         membersearchCondition.setTeamName("teamB");
 
-        List<MemberTeamDto> result = memberJpaRepository.search(membersearchCondition);
+        List<MemberTeamDto> result = memberRepository.search(membersearchCondition);
         assertThat(result).extracting("name").containsExactly("testB");
 
     }
