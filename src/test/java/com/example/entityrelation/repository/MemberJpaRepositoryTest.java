@@ -7,6 +7,8 @@ import com.example.entityrelation.dto.MembersearchCondition;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -58,6 +60,18 @@ class MemberJpaRepositoryTest {
 
         List<MemberTeamDto> result = memberRepository.search(membersearchCondition);
         assertThat(result).extracting("name").containsExactly("testB");
+
+
+    }
+
+    @Test
+    public void searchPageSimpleTest(){
+        MembersearchCondition condition= new MembersearchCondition();
+        PageRequest pageRequest = PageRequest.of(0, 3);
+        Page<MemberTeamDto> result = memberRepository.searchPageSimple(condition, pageRequest);
+        assertThat(result.getSize()).isEqualTo(3);
+        assertThat(result.getContent()).extracting("name").containsExactly("testA","testD","testB");
+
 
     }
 
