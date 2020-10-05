@@ -128,7 +128,10 @@ public class InitDB {
 //            em.persist(orderItem2);
 
             OrderItem orderItem2 = new OrderItem(order, movie1.getPrice(), movie1, 1);
-            em.persist(orderItem);
+            em.persist(orderItem2);
+
+            OrderItem orderItem3 = new OrderItem(order2, album1.getPrice(), album1, 1);
+            em.persist(orderItem3);
 
 //            Category category = new Category();
 //            category.setName("CategoryA");

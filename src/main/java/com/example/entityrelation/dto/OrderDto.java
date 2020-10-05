@@ -1,6 +1,5 @@
 package com.example.entityrelation.dto;
 
-import com.example.entityrelation.api.OrderApiController;
 import com.example.entityrelation.domain.DeliveryStatus;
 import com.example.entityrelation.domain.Order;
 import com.example.entityrelation.domain.OrderItem;
@@ -15,20 +14,21 @@ import static java.util.stream.Collectors.toList;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderDto{
+public class OrderDto {
+
     private Long orderId;
     private String name;
     private String city;
     private DeliveryStatus status;
-    private List<OrderItemDto> orderItems ;
+    private List<OrderItemDto> orderItems;
 
     @QueryProjection
-    public OrderDto(Order order){
+    public OrderDto(Order order) {
         orderId = order.getId();
         name = order.getMember().getName();
         city = order.getMember().getAddress().getCity();
         status = order.getDelivery().getStatus();
-        orderItems =  order.getOrderItems().stream()
+        orderItems = order.getOrderItems().stream()
                 .map(OrderDto.OrderItemDto::new)
                 .collect(toList());
 
@@ -39,9 +39,9 @@ public class OrderDto{
 
         private Long id;
         private int orderPrice;
-        private String itemName ;
+        private String itemName;
 
-        public OrderItemDto(OrderItem orderItem){
+        public OrderItemDto(OrderItem orderItem) {
             id = orderItem.getId();
             orderPrice = orderItem.getOrderPrice();
             itemName = orderItem.getItem().getName();

@@ -10,7 +10,9 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -109,22 +111,17 @@ public class OrderApiController {
 
     //다중페치조인 페이징(queryDsl)-Order받고 OrderDto 적용하기
     @GetMapping("/api/ordersFetchPage")
-    public Page<OrderDto> ordersFetchPagingQueryDsl(
-            @RequestParam(value = "offset", defaultValue = "0") int offset,
-            @RequestParam(value = "limit", defaultValue = "3") int limit ){
+    public Page<OrderDto> ordersFetchPagingQueryDsl(@PageableDefault(size = 10, sort = "id") Pageable pageable){
 
         MembersearchCondition condition= new MembersearchCondition();
-        PageRequest pageRequest = PageRequest.of(offset, limit);
-        Page<Order> orders =memberRepository.searchFetchPage(condition,pageRequest);
+//        PageRequest pageRequest = PageRequest.of(offset, limit);
 
       //  Page<MemberApiController.MemberDto> toMap = members.map(member -> new MemberApiController.MemberDto(member));
 //        Page<OrderDto> orderDtos = orders.stream()
 //                .map(OrderDto::new)
 //                .collect(toList());
 
-        Page<OrderDto> orderDtos = orders.map(order -> new OrderDto(order));
-
-        return orderDtos;
+        return memberRepository.searchFetchPage(condition,pageable).map(OrderDto::new);
     }
 
     @Data

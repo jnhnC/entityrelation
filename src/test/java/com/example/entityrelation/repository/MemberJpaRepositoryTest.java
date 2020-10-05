@@ -62,7 +62,13 @@ class MemberJpaRepositoryTest {
         List<MemberTeamDto> result = memberRepository.search(membersearchCondition);
         assertThat(result).extracting("name").containsExactly("testB");
 
-
+    @Test
+    public void searchPageComplexTest(){
+        MembersearchCondition condition= new MembersearchCondition();
+        PageRequest pageRequest = PageRequest.of(0, 3);
+        Page<MemberTeamDto> result = memberRepository.searchPageComplex(condition, pageRequest);
+        assertThat(result.getSize()).isEqualTo(3);
+        assertThat(result.getContent()).extracting("name").containsExactly("testA","testD","testB");
     }
 
     @Test
