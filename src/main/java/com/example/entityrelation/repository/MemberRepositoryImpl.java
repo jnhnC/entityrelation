@@ -1,8 +1,9 @@
 package com.example.entityrelation.repository;
 
-import com.example.entityrelation.dto.MemberTeamDto;
-import com.example.entityrelation.dto.MembersearchCondition;
-import com.example.entityrelation.dto.QMemberTeamDto;
+import com.example.entityrelation.domain.Order;
+import com.example.entityrelation.domain.QDelivery;
+import com.example.entityrelation.domain.QOrder;
+import com.example.entityrelation.dto.*;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,7 +14,9 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.example.entityrelation.domain.QDelivery.delivery;
 import static com.example.entityrelation.domain.QMember.member;
+import static com.example.entityrelation.domain.QOrder.order;
 import static com.example.entityrelation.domain.QTeam.team;
 import static org.springframework.util.StringUtils.hasText;
 
@@ -105,6 +108,52 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                 .fetchCount();
 
 
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public Page<OrderDto> searchFetchPageDto(MembersearchCondition condition, Pageable pageable) {
+
+        QueryResults<OrderDto> results = queryFactory
+                .select(new QOrderDto(order))
+                .from(order)
+                .leftJoin(order.member, member).fetchJoin()
+                .leftJoin(order.delivery, delivery).fetchJoin()
+                .where(
+                        nameEq(condition.getName()),
+                        teanNameEq(condition.getTeamName()),
+                        ageCoe(condition.getAgeCoe()),
+                        ageLoe(condition.getAgeLoe())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+
+        List<OrderDto> content = results.getResults();
+        long total = results.getTotal();
+
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public Page<Order> searchFetchPage(MembersearchCondition condition, Pageable pageable) {
+            QueryResults<Order> results = queryFactory
+                    .selectFrom(order)
+                    .from(member)
+                    .leftJoin(order.member, member).fetchJoin()
+                    .leftJoin(order.delivery, delivery).fetchJoin()
+                    .where(
+                            nameEq(condition.getName()),
+                            teanNameEq(condition.getTeamName()),
+                            ageCoe(condition.getAgeCoe()),
+                            ageLoe(condition.getAgeLoe())
+                    )
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .fetchResults();
+
+        long total = results.getTotal();
+        List<Order> content = results.getResults();
         return new PageImpl<>(content, pageable, total);
     }
 

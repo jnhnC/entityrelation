@@ -4,6 +4,7 @@ import com.example.entityrelation.domain.Member;
 import com.example.entityrelation.domain.Team;
 import com.example.entityrelation.dto.MemberTeamDto;
 import com.example.entityrelation.dto.MembersearchCondition;
+import com.example.entityrelation.dto.OrderDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -71,8 +72,15 @@ class MemberJpaRepositoryTest {
         Page<MemberTeamDto> result = memberRepository.searchPageSimple(condition, pageRequest);
         assertThat(result.getSize()).isEqualTo(3);
         assertThat(result.getContent()).extracting("name").containsExactly("testA","testD","testB");
+    }
 
-
+    @Test
+    public void searchFetchPageTest(){
+        MembersearchCondition condition= new MembersearchCondition();
+        PageRequest pageRequest = PageRequest.of(0, 3);
+        Page<OrderDto> result = memberRepository.searchFetchPageDto(condition, pageRequest);
+        assertThat(result.getSize()).isEqualTo(3);
+        assertThat(result.getContent()).extracting("name").containsExactly("testA","testD","testB");
     }
 
 }
