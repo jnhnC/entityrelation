@@ -1,9 +1,7 @@
 package com.example.entityrelation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,12 +10,12 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @Table(name="orders")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id","orderDate"})
 public class Order extends BaseEntity{
 
-    @Id    @GeneratedValue
+    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id")
     private Long id;
 

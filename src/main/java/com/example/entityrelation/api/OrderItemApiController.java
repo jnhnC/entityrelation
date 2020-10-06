@@ -5,6 +5,8 @@ import com.example.entityrelation.repository.OrderItemRepository;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,11 +22,8 @@ public class OrderItemApiController {
     private final OrderItemRepository orderItemRepository;
 
     @GetMapping("/api/orderItemList")
-    public List<OrderItemDto> orderItemList(){
-
-        List<OrderItem> orderItems =orderItemRepository.findAll();
-
-        return orderItems.stream().map(OrderItemDto::new).collect(toList());
+    public Page<OrderItemDto> orderItemList(Pageable pageable){
+        return orderItemRepository.findAll(pageable).map(OrderItemDto::new);
 
     }
 

@@ -6,6 +6,8 @@ import com.example.entityrelation.domain.item.Item;
 import com.example.entityrelation.repository.ItemRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,11 +21,8 @@ public class ItemApiController {
     private final ItemRepository itemRepository;
 
     @GetMapping("/api/item")
-    public List<ItemDto> itemList(){
-        List<Item> items = itemRepository.findAll();
-
-        return items.stream().map(ItemDto::new)
-                .collect(toList());
+    public Page<ItemDto> itemList(Pageable pageable){
+        return itemRepository.findAll(pageable).map(ItemDto::new);
     }
 
     @Data

@@ -139,15 +139,8 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     public Page<Order> searchFetchPage(MembersearchCondition condition, Pageable pageable) {
             QueryResults<Order> results = queryFactory
                     .selectFrom(order)
-                    .from(member)
                     .leftJoin(order.member, member).fetchJoin()
                     .leftJoin(order.delivery, delivery).fetchJoin()
-                    .where(
-                            nameEq(condition.getName()),
-                            teanNameEq(condition.getTeamName()),
-                            ageCoe(condition.getAgeCoe()),
-                            ageLoe(condition.getAgeLoe())
-                    )
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .fetchResults();

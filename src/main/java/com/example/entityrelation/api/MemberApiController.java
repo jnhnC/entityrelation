@@ -37,17 +37,13 @@ public class MemberApiController {
 
     //DTO를 이용한 가짜 엔티티 member 불러오기
     @GetMapping("/api/membersCollectionPaging")
-    public Page<MemberDto> membersCollectionPaging(){
-        PageRequest pageRequest = PageRequest.of(0, 3);
+    public Page<MemberDto> membersCollectionPaging(Pageable pageable){
+       // PageRequest pageRequest = PageRequest.of(0, 3);
         String name = "testA";
-        Page<Member> members = memberRepsitory.findAll(pageRequest);
-        System.out.println(members.getTotalElements());
-        System.out.println(members.getNumber());
-        System.out.println(members.getTotalPages());
-        System.out.println(members.isFirst());
-        System.out.println(members.hasNext());
+        Page<Member> members = memberRepsitory.findAll(pageable);
 
-        Page<MemberDto> toMap = members.map(member -> new MemberDto(member));
+
+        Page<MemberDto> toMap = members.map(MemberDto::new);
      //   Slice<Member> members = memberRepsitory.findAll(pageRequest);
 
 //        List<MemberDto> result = members.stream().map(MemberDto::new)

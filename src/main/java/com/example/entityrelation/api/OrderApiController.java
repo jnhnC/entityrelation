@@ -109,21 +109,14 @@ public class OrderApiController {
         return orders;
     }
 
-    //다중페치조인 페이징(queryDsl)-Order받고 OrderDto 적용하기
+    //다중페치조인 페이징(queryDsl)-Order받고 OrderDto 적용하기 - 최적이라 생각
     @GetMapping("/api/ordersFetchPage")
     public Page<OrderDto> ordersFetchPagingQueryDsl(@PageableDefault(size = 10, sort = "id") Pageable pageable){
-
-        MembersearchCondition condition= new MembersearchCondition();
-//        PageRequest pageRequest = PageRequest.of(offset, limit);
-
-      //  Page<MemberApiController.MemberDto> toMap = members.map(member -> new MemberApiController.MemberDto(member));
-//        Page<OrderDto> orderDtos = orders.stream()
-//                .map(OrderDto::new)
-//                .collect(toList());
-
+        MembersearchCondition condition = new MembersearchCondition();
         return memberRepository.searchFetchPage(condition,pageable).map(OrderDto::new);
     }
 
+    //DTO 정의
     @Data
     static class OrderDto{
         private Long orderId;

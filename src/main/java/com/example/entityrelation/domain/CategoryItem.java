@@ -3,6 +3,7 @@ package com.example.entityrelation.domain;
 
 import com.example.entityrelation.domain.item.Book;
 import com.example.entityrelation.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,12 +12,11 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CategoryItem extends BaseEntity{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "category_item_id")
     private Long id;
 
