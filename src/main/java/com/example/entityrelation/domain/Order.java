@@ -10,25 +10,26 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name="orders")
+@Table(name = "orders")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id","orderDate"})
-public class Order extends BaseEntity{
+@ToString(of = {"id", "orderDate"})
+public class Order extends BaseEntity {
 
-    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="order_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Long id;
 
     private LocalDateTime orderDate;
 
     //Member와 다대일 매핑
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="member_id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
     //Delivery와 일대일 매핑
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="delivery_id")
+    @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

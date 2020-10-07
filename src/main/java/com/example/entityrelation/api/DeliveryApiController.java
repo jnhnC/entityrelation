@@ -21,17 +21,18 @@ public class DeliveryApiController {
     private final DeliveryRepository deliveryRepository;
 
     @GetMapping("/api/delivery")
-    public Page<DeliveryDto> deliveryDtoList(Pageable pageable){
+    public Page<DeliveryDto> deliveryDtoList(Pageable pageable) {
         return deliveryRepository.findAll(pageable).map(DeliveryDto::new);
 
     }
+
     @Data
     private class DeliveryDto {
         private Long deliveryId;
         private DeliveryStatus status;
         private Long orderId;
 
-        public DeliveryDto(Delivery delivery){
+        public DeliveryDto(Delivery delivery) {
             deliveryId = delivery.getId();
             status = delivery.getStatus();
             orderId = delivery.getOrder().getId();

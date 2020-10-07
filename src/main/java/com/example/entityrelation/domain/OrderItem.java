@@ -36,6 +36,6 @@ public class OrderItem extends BaseEntity {
         this.order = order;
         this.orderPrice = orderPrice;
         this.item = item;
-        this.count =  count;
+        this.count = count;
     }
 }

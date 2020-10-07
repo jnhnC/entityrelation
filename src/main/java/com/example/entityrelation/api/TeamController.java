@@ -25,8 +25,8 @@ public class TeamController {
     private final TeamRepository teamRepository;
 
     @GetMapping("/api/teams")
-    public Page<TeamDto> teams(Pageable pageable){
-       return teamRepository.findAll(pageable).map(TeamDto::new);
+    public Page<TeamDto> teams(Pageable pageable) {
+        return teamRepository.findAll(pageable).map(TeamDto::new);
     }
 
     @Data
@@ -35,7 +35,7 @@ public class TeamController {
         private String teamName;
         private List<MemberDto> memberDtoList;
 
-        public TeamDto(Team team){
+        public TeamDto(Team team) {
             teamId = team.getId();
             teamName = team.getName();
             memberDtoList = team.getMembers().stream().map(MemberDto::new).collect(toList());
@@ -44,11 +44,11 @@ public class TeamController {
     }
 
     @Data
-    private class MemberDto{
+    private class MemberDto {
         private String name;
         private int age;
 
-        public MemberDto(Member member){
+        public MemberDto(Member member) {
             name = member.getName();
             age = member.getAge();
         }

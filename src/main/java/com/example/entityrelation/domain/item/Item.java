@@ -3,6 +3,7 @@ package com.example.entityrelation.domain.item;
 import com.example.entityrelation.domain.BaseEntity;
 import com.example.entityrelation.domain.CategoryItem;
 import com.example.entityrelation.domain.OrderItem;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public abstract class Item extends BaseEntity {
 

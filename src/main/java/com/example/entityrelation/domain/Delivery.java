@@ -9,15 +9,15 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "status"})
-public class Delivery extends BaseEntity{
+public class Delivery extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="delivery_id")
+    @Column(name = "delivery_id")
     private Long id;
 
     //Enum을 이용한 상태값 지정
-   // private String status;
+    // private String status;
     @Enumerated
     private DeliveryStatus status;
 

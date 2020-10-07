@@ -14,20 +14,21 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id","name"})
+@ToString(of = {"id", "name"})
 public class Team extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="team_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "team_id")
     private Long id;
 
     private String name;
 
     @JsonIgnore
     @OneToMany(mappedBy = "team")
-    private List<Member> members = new ArrayList<>() ;
+    private List<Member> members = new ArrayList<>();
 
-    public Team(String name){
+    public Team(String name) {
         this.name = name;
     }
 

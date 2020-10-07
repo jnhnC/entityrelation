@@ -21,7 +21,7 @@ public class ItemApiController {
     private final ItemRepository itemRepository;
 
     @GetMapping("/api/item")
-    public Page<ItemDto> itemList(Pageable pageable){
+    public Page<ItemDto> itemList(Pageable pageable) {
         return itemRepository.findAll(pageable).map(ItemDto::new);
     }
 
@@ -31,11 +31,11 @@ public class ItemApiController {
         private int price;
         private int stockQuantity;
         private List<OrderItemDto> orderItems;
-        private List<CategoryItemDto> categoryItems ;
+        private List<CategoryItemDto> categoryItems;
 
-        public ItemDto(Item item){
+        public ItemDto(Item item) {
             name = item.getName();
-            price= item.getPrice();
+            price = item.getPrice();
             stockQuantity = item.getStockQuantity();
             orderItems = item.getOrderItems().stream().map(OrderItemDto::new).collect(toList());
             categoryItems = item.getCategoryItems().stream().map(CategoryItemDto::new).collect(toList());
@@ -48,7 +48,7 @@ public class ItemApiController {
         private int orderPrice;
         private int orderCount;
 
-        public OrderItemDto(OrderItem orderItem){
+        public OrderItemDto(OrderItem orderItem) {
             orderPrice = orderItem.getOrderPrice();
             orderCount = orderItem.getCount();
 
@@ -59,7 +59,7 @@ public class ItemApiController {
     static class CategoryItemDto {
         private String categoryName;
 
-        public CategoryItemDto(CategoryItem categoryItem){
+        public CategoryItemDto(CategoryItem categoryItem) {
             categoryName = categoryItem.getCategory().getName();
         }
     }
