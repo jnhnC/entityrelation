@@ -3,19 +3,19 @@ package com.example.entityrelation.api;
 import com.example.entityrelation.domain.*;
 import com.example.entityrelation.repository.MemberRepository;
 import com.example.entityrelation.repository.TeamRepository;
-import com.fasterxml.jackson.databind.annotation.JsonValueInstantiator;
+import com.example.entityrelation.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-import javax.validation.Valid;
 
 import static java.util.stream.Collectors.toList;
 
@@ -80,6 +80,8 @@ public class MemberApiController {
         private int age;
         private Address address;
         private String teamName;
+        private LocalDateTime createDt;
+        private LocalDateTime updateDt;
         private List<OrderDto> orders;
 
         public MemberDto(Member member) {
@@ -87,6 +89,8 @@ public class MemberApiController {
             age = member.getAge();
             address = member.getAddress();
             teamName = member.getTeam().getName();
+            createDt = member.getCreatedDate();
+            updateDt = member.getUpdatedDate();
             orders = member.getOrders().stream()
                     .map(orders -> new OrderDto(orders))
                     .collect(toList());
@@ -145,13 +149,14 @@ public class MemberApiController {
     }
 
     @Data
+    @AllArgsConstructor
     static class UpdateMemberRequest {
         private Long id;
         private String name;
 
         public UpdateMemberRequest(Member member) {
-            this.id = member.id;
-            this.name = member.name;
+            this.id = member.getId();
+            this.name = member.getName();
         }
     }
 }

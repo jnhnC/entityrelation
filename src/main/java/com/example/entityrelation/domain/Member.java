@@ -2,6 +2,7 @@ package com.example.entityrelation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Where(clause = "delete = 0")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "age", "name"})
 public class Member extends BaseEntity {
@@ -44,7 +46,7 @@ public class Member extends BaseEntity {
 
     }
 
-    public Member(String name) {
+    public void updateName(String name) {
         this.name = name;
     }
 

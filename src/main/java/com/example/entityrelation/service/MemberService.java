@@ -1,4 +1,4 @@
-package com.example.entityrelation.api;
+package com.example.entityrelation.service;
 
 
 import com.example.entityrelation.domain.Member;
@@ -17,7 +17,9 @@ public class MemberService {
     @Transactional
     public void update(Long id, String name) {
         Optional<Member> member = memberRepository.findById(id);
-        new Member(member.get().getName());
+        member.get().updateName(name);
+
+
 
     }
 }
