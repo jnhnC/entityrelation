@@ -11,5 +11,4 @@ import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member,Long>, MemberRepositoryCustom {
 
-    //  Page<Member> findAll(PageRequest pageRequest);
 }

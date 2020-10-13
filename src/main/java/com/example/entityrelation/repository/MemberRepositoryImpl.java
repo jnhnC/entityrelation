@@ -1,5 +1,6 @@
 package com.example.entityrelation.repository;
 
+import com.example.entityrelation.domain.Member;
 import com.example.entityrelation.domain.Order;
 import com.example.entityrelation.domain.QDelivery;
 import com.example.entityrelation.domain.QOrder;
@@ -19,6 +20,7 @@ import static com.example.entityrelation.domain.QMember.member;
 import static com.example.entityrelation.domain.QOrder.order;
 import static com.example.entityrelation.domain.QTeam.team;
 import static org.springframework.util.StringUtils.hasText;
+import static org.springframework.util.StringUtils.trimAllWhitespace;
 
 public class MemberRepositoryImpl implements MemberRepositoryCustom{
 
@@ -148,6 +150,19 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
         long total = results.getTotal();
         List<Order> content = results.getResults();
         return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public Page<Member> searchMembers(Pageable pageable) {
+        QueryResults<Member> results = queryFactory
+                .selectFrom(member)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+
+        long total = results.getTotal();
+        List<Member> content = results.getResults();
+        return new PageImpl<>(content,pageable,total);
     }
 
     private BooleanExpression nameEq(String name) {

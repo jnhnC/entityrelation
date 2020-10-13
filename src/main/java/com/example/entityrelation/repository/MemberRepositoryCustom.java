@@ -1,5 +1,6 @@
 package com.example.entityrelation.repository;
 
+import com.example.entityrelation.domain.Member;
 import com.example.entityrelation.domain.Order;
 import com.example.entityrelation.dto.MemberTeamDto;
 import com.example.entityrelation.dto.MembersearchCondition;
@@ -15,5 +16,6 @@ public interface MemberRepositoryCustom {
     Page<MemberTeamDto> searchPageComplex(MembersearchCondition condition, Pageable pageable);
     Page<OrderDto> searchFetchPageDto(MembersearchCondition condition, Pageable pageable);
     Page<Order> searchFetchPage(MembersearchCondition condition, Pageable pageable);
+    Page<Member> searchMembers(Pageable pageable);
 
 }

@@ -11,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,19 +27,19 @@ import static java.util.stream.Collectors.toList;
 public class MemberApiController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepsitory;
+    private final MemberRepository memberRepository;
     private final TeamRepository teamRepsitory;
 
     //가짜 엔티티 Member 불러 오기
     @GetMapping("/api/members")
     public List<Member> orders() {
-        return memberRepsitory.findAll();
+        return memberRepository.findAll();
     }
 
     //DTO를 이용한 가짜 엔티티 member 불러오기
     @GetMapping("/api/membersCollection")
     public List<MemberDto> membersCollection() {
-        List<Member> members = memberRepsitory.findAll();
+        List<Member> members = memberRepository.findAll();
         List<MemberDto> result = members.stream().map(MemberDto::new)
                 .collect(toList());
 
@@ -46,7 +49,7 @@ public class MemberApiController {
     //DTO를 이용한 가짜 엔티티 member 불러오기
     @GetMapping("/api/membersCollectionPaging")
     public Page<MemberDto> membersCollectionPaging(Pageable pageable) {
-        Page<Member> members = memberRepsitory.findAll(pageable);
+        Page<Member> members = memberRepository.findAll(pageable);
         Page<MemberDto> toMap = members.map(MemberDto::new);
         //  Slice<Member> members = memberRepsitory.findAll(pageRequest);
         //  List<MemberDto> result = members.stream().map(MemberDto::new)
@@ -54,12 +57,29 @@ public class MemberApiController {
         return toMap;
     }
 
+    @GetMapping("/api/searchFetchPage")
+    public Page<MemberDto> searchFetchPage(Pageable pageable){
+        return memberRepository.searchMembers(pageable).map(MemberDto::new);
+    }
+
+    @PostMapping("/api/upload")
+    public void searchUpload(@RequestParam("file") MultipartFile file){
+        System.out.println("file = " + file.getOriginalFilename());
+        try {
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
     @PostMapping("/api/member")
     public MemberDto saveMember(@RequestBody @Valid MemberRequest request) {
         Team team = teamRepsitory.findByName(request.teamName);
 
         Member member = new Member(request.name, request.age, request.city, request.street, request.zipcode, team);
-        Member saveMember = memberRepsitory.save(member);
+        Member saveMember = memberRepository.save(member);
         MemberDto memberDto = new MemberDto(saveMember);
 
         return memberDto;
@@ -69,7 +89,7 @@ public class MemberApiController {
     @PutMapping("/api/member/{id}")
     public MemberDto updateMember(@PathVariable("id") Long id, @RequestBody @Valid UpdateMemberRequest request ){
         memberService.update(id, request.getName());
-        Optional<Member> byId = memberRepsitory.findById(id);
+        Optional<Member> byId = memberRepository.findById(id);
         return new MemberDto(byId.get());
     }
 

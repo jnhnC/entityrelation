@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -52,7 +53,7 @@ class MemberJpaRepositoryTest {
     }
 
     @Test
-    public void searchTest(){
+    public void searchTest() {
 
         MembersearchCondition membersearchCondition = new MembersearchCondition();
         membersearchCondition.setAgeCoe(30);
@@ -61,6 +62,7 @@ class MemberJpaRepositoryTest {
 
         List<MemberTeamDto> result = memberRepository.search(membersearchCondition);
         assertThat(result).extracting("name").containsExactly("testB");
+    }
 
     @Test
     public void searchPageComplexTest(){
