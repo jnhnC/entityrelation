@@ -4,6 +4,7 @@ import com.example.entityrelation.domain.*;
 import com.example.entityrelation.repository.MemberRepository;
 import com.example.entityrelation.repository.TeamRepository;
 import com.example.entityrelation.service.MemberService;
+import com.example.entityrelation.util.SimpleExcelUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -65,8 +66,30 @@ public class MemberApiController {
     @PostMapping("/api/upload")
     public void searchUpload(@RequestParam("file") MultipartFile file){
         System.out.println("file = " + file.getOriginalFilename());
-        try {
+        try{
+            String origFilename = file.getOriginalFilename();
+            String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\uploads";
 
+            if (!new File(savePath).exists()) {
+                try{
+                    new File(savePath).mkdir();
+                }
+                catch(Exception e){
+                    e.getStackTrace();
+                }
+            }
+            String filePath = savePath + "\\" + origFilename;
+          //  file.transferTo(new File(filePath));
+
+            File convFile = new File(filePath);
+            convFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(convFile);
+            fos.write(file.getBytes());
+            fos.close();
+
+
+            SimpleExcelUtil excelUtil = new SimpleExcelUtil();
+            List<List<String>> parse = excelUtil.parse(convFile);
 
         } catch (Exception ex) {
             ex.printStackTrace();
