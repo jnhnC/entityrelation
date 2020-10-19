@@ -28,7 +28,7 @@ public class SimpleExcelUtil implements SheetContentsHandler {
     private int currentCol = -1; // 빈값 체크용
     private int currRowNum = 0; //현재 읽고 셀
 
-    public List<List<String>> parse(File file) throws Exception {
+    public static SimpleExcelUtil parse(File file) throws Exception {
         SimpleExcelUtil sheetHandler = new SimpleExcelUtil();
 
         OPCPackage opc = OPCPackage.open(file);
@@ -55,19 +55,22 @@ public class SimpleExcelUtil implements SheetContentsHandler {
         opc.close();
 
 
+        return sheetHandler;
+    }
+    public List<List<String>> getRows(){
         return rows;
     }
 
     @Override
     public void startRow(int rowNum) {
-        System.out.println("startRow = " + rowNum);
+        //System.out.println("startRow = " + rowNum);
         this.currentCol = -1;
         this.currRowNum = rowNum;
     }
 
     @Override
     public void endRow(int rowNum) {
-        System.out.println("endRow = " + rowNum);
+        //System.out.println("endRow = " + rowNum);
         if (rowNum == 0) {
             header = new ArrayList(row);
         } else {
@@ -84,7 +87,7 @@ public class SimpleExcelUtil implements SheetContentsHandler {
 
     @Override
     public void cell(String cellReference, String formattedValue, XSSFComment comment) {
-        System.out.println("cell = " + formattedValue);
+      //  System.out.println("cell = " + formattedValue);
         int iCol = (new CellReference(cellReference)).getCol();
         int emptyCol = iCol - currentCol - 1;
         for (int i = 0; i < emptyCol; i++) {
@@ -96,7 +99,7 @@ public class SimpleExcelUtil implements SheetContentsHandler {
 
     @Override
     public void headerFooter(String text, boolean isHeader, String tagName) {
-        System.out.println("headerFooter = " + text);
+       // System.out.println("headerFooter = " + text);
 
     }
 }

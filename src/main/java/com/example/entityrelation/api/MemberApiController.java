@@ -63,39 +63,6 @@ public class MemberApiController {
         return memberRepository.searchMembers(pageable).map(MemberDto::new);
     }
 
-    @PostMapping("/api/upload")
-    public void searchUpload(@RequestParam("file") MultipartFile file){
-        System.out.println("file = " + file.getOriginalFilename());
-        try{
-            String origFilename = file.getOriginalFilename();
-            String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\uploads";
-
-            if (!new File(savePath).exists()) {
-                try{
-                    new File(savePath).mkdir();
-                }
-                catch(Exception e){
-                    e.getStackTrace();
-                }
-            }
-            String filePath = savePath + "\\" + origFilename;
-          //  file.transferTo(new File(filePath));
-
-            File convFile = new File(filePath);
-            convFile.createNewFile();
-            FileOutputStream fos = new FileOutputStream(convFile);
-            fos.write(file.getBytes());
-            fos.close();
-
-
-            SimpleExcelUtil excelUtil = new SimpleExcelUtil();
-            List<List<String>> parse = excelUtil.parse(convFile);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-    }
 
     @PostMapping("/api/member")
     public MemberDto saveMember(@RequestBody @Valid MemberRequest request) {
