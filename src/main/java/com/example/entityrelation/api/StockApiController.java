@@ -1,11 +1,12 @@
-package com.example.entityrelation.controller;
+package com.example.entityrelation.api;
 
 import com.example.entityrelation.domain.Stock;
-import com.example.entityrelation.repository.StockRepository;
+import com.example.entityrelation.service.StockService;
 import com.example.entityrelation.util.SimpleExcelUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,9 +18,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class StockController {
+public class StockApiController {
 
-    private final StockRepository stockRepository;
+    private final StockService stockService;
 
     @PostMapping("/api/upload")
     public void searchUpload(@RequestParam("file") MultipartFile file){
@@ -47,20 +48,19 @@ public class StockController {
 
 
             SimpleExcelUtil excelUtil = new SimpleExcelUtil();
-            List<List<String>> parse = excelUtil.parse(convFile).getRows();
-            for (List<String> list : parse){
-                Stock stock  = new Stock(null, list.get(1), list.get(2), list.get(3), list.get(4), list.get(5),
-                        list.get(6),list.get(7), list.get(8),list.get(9), list.get(10),list.get(11), list.get(12),
-                        list.get(13), list.get(14),list.get(15));
-                stockRepository.save(stock);
-            }
-
+            List<List<String>> excelData = excelUtil.getData(convFile).getRows();
+            stockService.parseStockData(excelData);
 
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
+    }
+
+    @GetMapping("/api/stock")
+    public List<Stock> getStockList(){
+        return stockService.findAll();
     }
 
     @Data

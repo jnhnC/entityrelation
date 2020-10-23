@@ -28,7 +28,7 @@ public class SimpleExcelUtil implements SheetContentsHandler {
     private int currentCol = -1; // 빈값 체크용
     private int currRowNum = 0; //현재 읽고 셀
 
-    public static SimpleExcelUtil parse(File file) throws Exception {
+    public static SimpleExcelUtil getData(File file) throws Exception {
         SimpleExcelUtil sheetHandler = new SimpleExcelUtil();
 
         OPCPackage opc = OPCPackage.open(file);

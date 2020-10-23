@@ -10,8 +10,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@ToString(of = {"id","col1","col2","col3","col4","col5","col6","col7","col8"})
+@ToString(of = {"id", "col1", "col2", "col3", "col4", "col5", "col6", "col7", "col8"})
 public class Stock {
 
     @Id
@@ -34,4 +33,24 @@ public class Stock {
     private String col13;
     private String col14;
     private String col15;
+
+
+    public Stock(Long id, String col1, String col2, String col3, String col4, String col5, String col6, String col7, String col8, String col9, String col10, String col11, String col12, String col13, String col14, String col15) {
+        this.id = id;
+        this.col1 = col1;
+        this.col2 = col2;
+        this.col3 = col3;
+        this.col4 = col4;
+        this.col5 = col5;
+        this.col6 = col6;
+        this.col7 = col7;
+        this.col8 = col8;
+        this.col9 = col9;
+        this.col10 = col10;
+        this.col11 = col11;
+        this.col12 = col12;
+        this.col13 = col13;
+        this.col14 = col14;
+        this.col15 = col15;
+    }
 }
