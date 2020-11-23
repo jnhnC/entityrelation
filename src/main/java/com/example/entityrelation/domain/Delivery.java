@@ -25,8 +25,14 @@ public class Delivery extends BaseEntity {
     @OneToOne(mappedBy = "delivery")
     private Order order;
 
+    public Delivery(Long id) {
+        this.id = id;
+    }
+
 
     public Delivery(DeliveryStatus status) {
         this.status = status;
     }
+
+
 }

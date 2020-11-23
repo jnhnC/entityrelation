@@ -1,7 +1,10 @@
 package com.example.entityrelation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -35,6 +38,9 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
+    public Member(Long id) {
+        this.id = id;
+    }
 
     public Member(String name, int age, String city, String streets, String zipcode, Team team) {
         this.name = name;

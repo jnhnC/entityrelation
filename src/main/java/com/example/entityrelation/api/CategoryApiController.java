@@ -23,7 +23,7 @@ public class CategoryApiController {
 
 
     @GetMapping("/api/categroy")
-    public Page<CategoryDto> categoryDtoList(Pageable pageable){
+    public Page<CategoryDto> categoryDtoList(Pageable pageable) {
         return catogoryRepository.findAll(pageable).map(CategoryDto::new);
     }
 
@@ -32,7 +32,7 @@ public class CategoryApiController {
         private String categoryName;
         private List<CategoryItemDto> categoryItems;
 
-        public CategoryDto(Category category){
+        public CategoryDto(Category category) {
             categoryName = category.getName();
             categoryItems = category.getCategoryItems().stream().map(CategoryItemDto::new).collect(toList());
         }
@@ -41,7 +41,7 @@ public class CategoryApiController {
         private class CategoryItemDto {
             private String itemName;
 
-            public CategoryItemDto(CategoryItem categoryItem){
+            public CategoryItemDto(CategoryItem categoryItem) {
                 itemName = categoryItem.getItem().getName();
 
             }

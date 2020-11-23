@@ -1,8 +1,6 @@
 package com.example.entityrelation.api;
 
-import com.example.entityrelation.domain.DeliveryStatus;
-import com.example.entityrelation.domain.Order;
-import com.example.entityrelation.domain.OrderItem;
+import com.example.entityrelation.domain.*;
 import com.example.entityrelation.dto.MembersearchCondition;
 import com.example.entityrelation.dto.OrderDto;
 import com.example.entityrelation.repository.*;
@@ -13,11 +11,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import static java.util.stream.Collectors.toList;
 
@@ -31,15 +30,15 @@ public class OrderApiController {
 
     //주인 엔티티 Order 불러 오기
     @GetMapping("/api/orders")
-    public List<Order> orders(){
+    public List<Order> orders() {
         return orderRepsitory.findAll();
     }
 
 
     //DTO 사용하기
     @GetMapping("/api/ordersDto")
-    public List<OrderDto> ordersDto(){
-        List<Order> orders =orderRepsitory.findFetchOrderMember();
+    public List<OrderDto> ordersDto() {
+        List<Order> orders = orderRepsitory.findFetchOrderMember();
 
         List<OrderDto> orderDtos = orders.stream()
                 .map(OrderDto::new)
@@ -49,8 +48,8 @@ public class OrderApiController {
 
     //페치조인 사용하기
     @GetMapping("/api/ordersFetch")
-    public List<OrderDto> ordersFetch(){
-        List<Order> orders =orderRepsitory.findFetchAll();
+    public List<OrderDto> ordersFetch() {
+        List<Order> orders = orderRepsitory.findFetchAll();
 
         List<OrderDto> orderDtos = orders.stream()
                 .map(OrderDto::new)
@@ -72,7 +71,7 @@ public class OrderApiController {
 
     //페이징 변경
     @GetMapping("/api/ordersPage")
-    public Page<OrderDto> ordersPage(){
+    public Page<OrderDto> ordersPage() {
 
         PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "member_id"));
         Page<Order> orders = orderRepsitory.findAll(pageRequest);
@@ -86,9 +85,9 @@ public class OrderApiController {
     @GetMapping("/api/ordersFetchPaging")
     public List<OrderDto> ordersFetchPaging(
             @RequestParam(value = "offset", defaultValue = "0") int offset,
-            @RequestParam(value = "limit", defaultValue = "100") int limit ){
+            @RequestParam(value = "limit", defaultValue = "100") int limit) {
 
-        List<Order> orders =orderQueryRepository.findFetchPaging(offset, limit);
+        List<Order> orders = orderQueryRepository.findFetchPaging(offset, limit);
 
         List<OrderDto> orderDtos = orders.stream()
                 .map(OrderDto::new)
@@ -100,38 +99,54 @@ public class OrderApiController {
     @GetMapping("/api/ordersFetchPageDto")
     public Page<com.example.entityrelation.dto.OrderDto> ordersFetchPagingQueryDslDto(
             @RequestParam(value = "offset", defaultValue = "0") int offset,
-            @RequestParam(value = "limit", defaultValue = "3") int limit ){
+            @RequestParam(value = "limit", defaultValue = "3") int limit) {
 
-        MembersearchCondition condition= new MembersearchCondition();
+        MembersearchCondition condition = new MembersearchCondition();
         PageRequest pageRequest = PageRequest.of(offset, limit);
-        Page<com.example.entityrelation.dto.OrderDto> orders =memberRepository.searchFetchPageDto(condition,pageRequest);
+        Page<com.example.entityrelation.dto.OrderDto> orders = memberRepository.searchFetchPageDto(condition, pageRequest);
 
         return orders;
     }
 
     //다중페치조인 페이징(queryDsl)-Order받고 OrderDto 적용하기 - 최적이라 생각
     @GetMapping("/api/ordersFetchPage")
-    public Page<OrderDto> ordersFetchPagingQueryDsl(@PageableDefault(size = 10, sort = "id") Pageable pageable){
+    public Page<OrderDto> ordersFetchPagingQueryDsl(@PageableDefault(size = 10, sort = "id") Pageable pageable) {
         MembersearchCondition condition = new MembersearchCondition();
-        return memberRepository.searchFetchPage(condition,pageable).map(OrderDto::new);
+        return memberRepository.searchFetchPage(condition, pageable).map(OrderDto::new);
     }
+
+    @PostMapping("/api/orders")
+    public OrderDto saveOrders(@RequestBody @Valid OrderRequest request){
+        System.out.println("request = " + request);
+        Member member = new Member(request.memberId);
+        Delivery delivery = new Delivery(request.deliveryId);
+        System.out.println("delivery.getId() = " + delivery.getId());
+        
+        Order order = new Order(member, delivery, LocalDateTime.now());
+        Order save = orderRepsitory.save(order);
+
+        OrderDto orderDto = new OrderDto(save);
+        return orderDto;
+//        return  null;
+    }
+
 
     //DTO 정의
     @Data
-    static class OrderDto{
+    static class OrderDto {
         private Long orderId;
         private String name;
         private String address;
         private DeliveryStatus status;
-        private List<OrderItemDto> orderItems ;
+        private List<OrderItemDto> orderItems;
 
-        public OrderDto(Order order){
+        public OrderDto(Order order) {
             orderId = order.getId();
             name = order.getMember().getName();
             address = order.getMember().getAddress().getCity()
-                    +""+ order.getMember().getAddress().getStreet();
+                    + "" + order.getMember().getAddress().getStreet();
             status = order.getDelivery().getStatus();
-            orderItems =  order.getOrderItems().stream()
+            orderItems = order.getOrderItems().stream()
                     .map(OrderItemDto::new)
                     .collect(toList());
 
@@ -142,9 +157,9 @@ public class OrderApiController {
 
             private Long id;
             private int orderPrice;
-            private String itemName ;
+            private String itemName;
 
-            public OrderItemDto(OrderItem orderItem){
+            public OrderItemDto(OrderItem orderItem) {
                 id = orderItem.getId();
                 orderPrice = orderItem.getOrderPrice();
                 itemName = orderItem.getItem().getName();
@@ -153,4 +168,9 @@ public class OrderApiController {
         }
     }
 
+    @Data
+    static class OrderRequest {
+        private Long memberId;
+        private Long deliveryId;
+    }
 }

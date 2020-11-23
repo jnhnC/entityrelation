@@ -20,7 +20,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor
-public class TeamController {
+public class TeamApiController {
 
     private final TeamRepository teamRepository;
 

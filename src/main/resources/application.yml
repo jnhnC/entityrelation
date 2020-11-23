@@ -1,0 +1,60 @@
+spring:
+  profiles:
+    active: dev # 기본 환경 선택
+    hibernate:
+      format_sql: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      default_batch_fetch_size: 100
+
+    http:
+      encoding:
+        charset: UTF-8
+        enabled: true
+        force: true
+
+  servlet:
+    multipart:
+      maxFileSize: 30MB
+      maxRequestSize: 30MB
+
+#  data:
+#      elasticsearch:
+#        client-name : my-application
+#        client-nodes : localhost:9300
+
+#  main:
+#    allow-bean-definition-overriding: true
+
+# local 환경
+---
+spring:
+  profiles: local
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+
+  h2:
+    console:
+      path: /h2
+      enabled: true
+# 개발 환경
+---
+spring:
+  profiles: dev
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@211.174.180.110:1521:ACAR
+    username: auction
+    password: auctionpw
+
+# 운영 환경
+---
+spring:
+  profiles: pro
+
+
+
+

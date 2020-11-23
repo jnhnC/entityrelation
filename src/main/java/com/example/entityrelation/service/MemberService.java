@@ -18,8 +18,5 @@ public class MemberService {
     public void update(Long id, String name) {
         Optional<Member> member = memberRepository.findById(id);
         member.get().updateName(name);
-
-
-
     }
 }

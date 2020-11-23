@@ -28,7 +28,7 @@ public class Order extends BaseEntity {
     private Member member;
 
     //Delivery와 일대일 매핑
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 

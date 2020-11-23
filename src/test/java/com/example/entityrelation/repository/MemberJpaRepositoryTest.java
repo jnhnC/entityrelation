@@ -29,7 +29,6 @@ class MemberJpaRepositoryTest {
     @Autowired
     MemberJpaRepository memberJpaRepository;
 
-
     @Autowired
     MemberRepository memberRepository;
 
@@ -63,7 +62,7 @@ class MemberJpaRepositoryTest {
         List<MemberTeamDto> result = memberRepository.search(membersearchCondition);
         assertThat(result).extracting("name").containsExactly("testB");
     }
-
+    }
     @Test
     public void searchPageComplexTest(){
         MembersearchCondition condition= new MembersearchCondition();
